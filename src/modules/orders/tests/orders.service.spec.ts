@@ -24,29 +24,29 @@ describe('OrdersService', () => {
   });
 
   it('should get all orders', async () => {
-    jest.spyOn(OrdersRepository.prototype, 'findAll').mockResolvedValueOnce(mockOrders);
+    jest.spyOn(repository, 'findAll').mockResolvedValueOnce(mockOrders);
     const orders = await service.getAll({ page: 1, limit: 5 });
 
-    expect(OrdersRepository.prototype.findAll).toHaveBeenCalledTimes(1);
+    expect(repository.findAll).toHaveBeenCalledTimes(1);
     expect(orders).toEqual(mockOrders);
   });
 
   it('should get order by id', async () => {
     const order = mockOrders[0];
-    jest.spyOn(OrdersRepository.prototype, 'findById').mockResolvedValueOnce(order);
+    jest.spyOn(repository, 'findById').mockResolvedValueOnce(order);
     const result = await service.getById(order.id);
 
-    expect(OrdersRepository.prototype.findById).toHaveBeenCalledWith(order.id);
+    expect(repository.findById).toHaveBeenCalledWith(order.id);
     expect(result).toEqual(order);
   });
 
   it('should create an order', async () => {
     const newOrder = createFakeOrder();
-    jest.spyOn(OrdersRepository.prototype, 'create').mockResolvedValueOnce(newOrder);
+    jest.spyOn(repository, 'create').mockResolvedValueOnce(newOrder);
     jest.spyOn(OrdersGateway.prototype, 'notifyOfCreation').mockImplementation(() => {});
     const result = await service.create(newOrder as CreateOrderDTO);
 
-    expect(OrdersRepository.prototype.create).toHaveBeenCalledWith(newOrder);
+    expect(repository.create).toHaveBeenCalledWith(newOrder);
     expect(OrdersGateway.prototype.notifyOfCreation).toHaveBeenCalledTimes(1);
     expect(result).toEqual(newOrder);
   });
@@ -54,11 +54,11 @@ describe('OrdersService', () => {
   it('should update an order', async () => {
     const order = mockOrders[0];
     const updatedData = { status: ORDERS_STATUS.OUT_FOR_DELIVERY };
-    jest.spyOn(OrdersRepository.prototype, 'update').mockResolvedValueOnce({ ...order, ...updatedData });
+    jest.spyOn(repository, 'update').mockResolvedValueOnce({ ...order, ...updatedData });
     jest.spyOn(OrdersGateway.prototype, 'statusUpdate').mockImplementation(() => {});
     const result = await service.update(order.id, updatedData);
 
-    expect(OrdersRepository.prototype.update).toHaveBeenCalledWith(order.id, updatedData);
+    expect(repository.update).toHaveBeenCalledWith(order.id, updatedData);
     expect(OrdersGateway.prototype.statusUpdate).toHaveBeenCalledWith(order.id, updatedData.status);
     expect(result).toEqual({ ...order, ...updatedData });
   });
