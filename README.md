@@ -1,85 +1,86 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧑‍🍳👩‍🍳👨‍🍳 Restauranto
+A very simple backend project where I google "NestJS best practices" every 5 minutes.
+Bonus: live order updates using websockets 👾
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Features
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- **NestJS architecture**: Modular backend structure.
+- **Prisma ORM** using PostgreSQL database.
+- **Real-time order updates**: websocket support for live order status tracking.
+- **Caching** for fast API responses.
+- **Validation and error handling**: DTOs and global filters keep data clean.
+- **Unit and E2E tests**: test coverage from logic to endpoints.
+- **CI/CD**: Automated linting and tests via GitHub actions.
+- **Strict-typing**: for TypeScript safety.
 
-## Description
+## Getting started
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+ 1. Clone and install
 
 ```bash
-$ npm install
+git clone https://github.com/telattar/restauranto.git
+cd restauranto
+npm install
 ```
 
-## Compile and run the project
+ 2. Configure your environment
+
+Copy `.env.sample` to `.env` and set your PostgreSQL connection string:
+
+```
+DATABASE_URL=postgresql://user:password@localhost:your-port/some-database
+```
+
+ 3. Run DB migrations using Prisma
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npx prisma migrate dev --schema=src/database/schema.prisma
 ```
 
-## Run tests
+ 4. Start the server
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+nest start --watch
 ```
 
-## Resources
+ 5. Run the tests
 
-Check out a few resources that may come in handy when working with NestJS:
+- Unit Tests
+  ```bash
+  npm run test
+  ```
+- End-to-End Tests
+  ```bash
+  npm run test:e2e
+  ```
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## API Overview
 
-## Support
+### Restaurants
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- `GET /restaurants` — List all restaurants (cached to improve performance)
+- `GET /restaurants/:id` — Get restaurant by ID
+- `POST /restaurants` — Create a restaurant
+- `PATCH /restaurants/:id` — Update a restaurant
+- `DELETE /restaurants/:id` — Delete a restaurant
 
-## Stay in touch
+### Products
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- `GET /products` — List all products
+- `GET /products/:id` — Get product by ID
+- `POST /products` — Create a product
+- `PATCH /products/:id` — Update a product
+- `DELETE /products/:id` — Delete a product
 
-## License
+### Orders
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `GET /orders` — List all orders (paginated)
+- `GET /orders/:id` — Get order by ID
+- `POST /orders` — Create an order
+- `PATCH /orders/:id` — Update order status
+
+### Real-Time
+
+- WebSocket namespace: `/order-status`
+- Events: `order-status`, `created-order`
