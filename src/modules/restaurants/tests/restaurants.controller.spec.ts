@@ -6,6 +6,7 @@ import { createFakeRestaurant } from '../factories/restaurants.factory';
 import { RestaurantsRepository } from '../restaurants.repository';
 import { DatabaseService } from '../../../database/database.service';
 import { faker } from '@faker-js/faker';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 describe('RestaurantsController', () => {
   let controller: RestaurantsController;
@@ -15,7 +16,7 @@ describe('RestaurantsController', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RestaurantsController],
-      providers: [RestaurantsService, RestaurantsRepository, DatabaseService],
+      providers: [{ provide: CACHE_MANAGER, useValue: {} }, RestaurantsService, RestaurantsRepository, DatabaseService],
     }).compile();
 
     controller = module.get<RestaurantsController>(RestaurantsController);

@@ -55,7 +55,7 @@ export class OrdersRepository {
     const { restaurants, page, limit } = query;
     const offset = (page - 1) * limit;
 
-    let orders = await this.database.order.findMany({
+    const orders = await this.database.order.findMany({
       where: restaurants ? { restaurant: { name: { in: restaurants } } } : {},
       include: {
         orderProducts: { select: { product: true, quantity: true } },
