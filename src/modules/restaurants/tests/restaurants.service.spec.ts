@@ -22,46 +22,46 @@ describe('RestaurantsService', () => {
   });
 
   it('should get all restaurant', async () => {
-    jest.spyOn(RestaurantsRepository.prototype, 'findAll').mockResolvedValueOnce(mockRestaurants);
+    jest.spyOn(repository, 'findAll').mockResolvedValueOnce(mockRestaurants);
     const restaurants = await service.getAll();
 
-    expect(RestaurantsRepository.prototype.findAll).toHaveBeenCalledTimes(1);
+    expect(repository.findAll).toHaveBeenCalledTimes(1);
     expect(restaurants).toEqual(mockRestaurants);
   });
 
   it('should get restaurant by id', async () => {
     const restaurant = mockRestaurants[0];
-    jest.spyOn(RestaurantsRepository.prototype, 'findOne').mockResolvedValueOnce(restaurant);
+    jest.spyOn(repository, 'findOne').mockResolvedValueOnce(restaurant);
     const result = await service.getById(restaurant.id);
 
-    expect(RestaurantsRepository.prototype.findOne).toHaveBeenCalledWith(restaurant.id);
+    expect(repository.findOne).toHaveBeenCalledWith(restaurant.id);
     expect(result).toEqual(restaurant);
   });
 
   it('should create a restaurant', async () => {
     const newRestaurant = createFakeRestaurant();
-    jest.spyOn(RestaurantsRepository.prototype, 'create').mockResolvedValueOnce(newRestaurant);
+    jest.spyOn(repository, 'create').mockResolvedValueOnce(newRestaurant);
     const result = await service.create(newRestaurant);
 
-    expect(RestaurantsRepository.prototype.create).toHaveBeenCalledWith(newRestaurant);
+    expect(repository.create).toHaveBeenCalledWith(newRestaurant);
     expect(result).toEqual(newRestaurant);
   });
 
   it('should update a restaurant', async () => {
     const restaurant = mockRestaurants[0];
     const updatedData = { name: faker.commerce.productName() };
-    jest.spyOn(RestaurantsRepository.prototype, 'update').mockResolvedValueOnce({ ...restaurant, ...updatedData });
+    jest.spyOn(repository, 'update').mockResolvedValueOnce({ ...restaurant, ...updatedData });
     const result = await service.update(restaurant.id, updatedData);
 
-    expect(RestaurantsRepository.prototype.update).toHaveBeenCalledWith(restaurant.id, updatedData);
+    expect(repository.update).toHaveBeenCalledWith(restaurant.id, updatedData);
     expect(result).toEqual({ ...restaurant, ...updatedData });
   });
 
   it('should delete a restaurant', async () => {
     const { id } = mockRestaurants[0];
-    jest.spyOn(RestaurantsRepository.prototype, 'delete').mockResolvedValueOnce(undefined);
+    jest.spyOn(repository, 'delete').mockResolvedValueOnce(undefined);
     await service.delete(id);
 
-    expect(RestaurantsRepository.prototype.delete).toHaveBeenCalledWith(id);
+    expect(repository.delete).toHaveBeenCalledWith(id);
   });
 });

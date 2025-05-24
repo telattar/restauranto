@@ -1,10 +1,9 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { CreateOrderDTO } from './dto/create-order.dto';
 import { UpdateOrderDTO } from './dto/update-orders.dto';
 import { OrdersService } from './orders.service';
 import { OrderDTO } from './dto/order.dto';
 import { GetAllOrdersDTO } from './dto/get-all-orders.dto';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('orders')
 export class OrdersController {
