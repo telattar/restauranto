@@ -7,6 +7,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Admin {
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  password      String
+  isSuperAdmin  Boolean
+  createdAt     DateTime  @default(now())
+}
+
 model Restaurant {
   id          String   @id @default(uuid())
   name        String
