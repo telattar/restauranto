@@ -14,12 +14,6 @@ export class ProductsController {
     return { createdProduct };
   }
 
-  @Get()
-  async getAllProducts(): Promise<{ products: ProductDTO[] }> {
-    const products = await this.productsService.getAll();
-    return { products };
-  }
-
   @Get(':id')
   async getProductById(@Param('id', ParseUUIDPipe) id: string): Promise<{ product: ProductDTO }> {
     const product = await this.productsService.getById(id);

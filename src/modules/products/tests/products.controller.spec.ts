@@ -23,14 +23,6 @@ describe('ProductsController', () => {
     mockProducts = Array.from({ length: 3 }, () => createFakeProduct());
   });
 
-  it('should return all products', async () => {
-    jest.spyOn(service, 'getAll').mockResolvedValueOnce(mockProducts);
-    const result = await controller.getAllProducts();
-
-    expect(service.getAll).toHaveBeenCalledTimes(1);
-    expect(result).toEqual({ products: mockProducts });
-  });
-
   it('should return product by id', async () => {
     const product = mockProducts[0];
     jest.spyOn(service, 'getById').mockResolvedValueOnce(product);

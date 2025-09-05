@@ -12,10 +12,6 @@ export class ProductsService {
     return this.productsRepository.create(data);
   }
 
-  async getAll(): Promise<ProductDTO[]> {
-    return this.productsRepository.findAll();
-  }
-
   async getById(id: string): Promise<ProductDTO> {
     return this.productsRepository.findById(id);
   }
