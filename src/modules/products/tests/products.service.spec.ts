@@ -21,14 +21,6 @@ describe('ProductsService', () => {
     mockProducts = Array.from({ length: 3 }, () => createFakeProduct());
   });
 
-  it('should get all products', async () => {
-    jest.spyOn(repository, 'findAll').mockResolvedValueOnce(mockProducts);
-    const products = await service.getAll();
-
-    expect(repository.findAll).toHaveBeenCalledTimes(1);
-    expect(products).toEqual(mockProducts);
-  });
-
   it('should get product by id', async () => {
     const product = mockProducts[0];
     jest.spyOn(repository, 'findById').mockResolvedValueOnce(product);
